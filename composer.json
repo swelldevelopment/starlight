@@ -1,5 +1,5 @@
 {
-	"name": "SwellDevelopment/Starlight",
+	"name": "swelldevelopment/starlight",
 	"version": "1.0.0",
 	"require": {
 		"php": ">=7.0.0",
