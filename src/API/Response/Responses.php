@@ -25,8 +25,8 @@ class Responses
 	//=========================================================================
 	public static function Success(Array $payload=[])
 	{
-        return ResponseJSON::Success($payload);
-    }
+	    return ResponseJSON::Success($payload);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -35,9 +35,9 @@ class Responses
 	//=========================================================================
 	public static function NoData(Array $args=[])
 	{
-        $args['status'] = 'no_data';
-        return ResponseJSON::Success($args);
-    }
+	    $args['status'] = 'no_data';
+	    return ResponseJSON::Success($args);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -46,9 +46,9 @@ class Responses
 	//=========================================================================
 	public static function PermanentRedirect(Array $args=[])
 	{
-        $args['status'] = 'permanent_redirect';
-        return ResponseJSON::Redirect($args, 308);
-    }
+	    $args['status'] = 'permanent_redirect';
+	    return ResponseJSON::Redirect($args, 308);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -57,9 +57,9 @@ class Responses
 	//=========================================================================
 	public static function TemporaryRedirect(Array $args=[])
 	{
-        $args['status'] = 'temporary_redirect';
-        return ResponseJSON::Redirect($args, 307);
-    }
+	    $args['status'] = 'temporary_redirect';
+	    return ResponseJSON::Redirect($args, 307);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -68,9 +68,9 @@ class Responses
 	//=========================================================================
 	public static function SeeOther(Array $args=[])
 	{
-        $args['status'] = 'see_other';
-        return ResponseJSON::Redirect($args, 303);
-    }
+	    $args['status'] = 'see_other';
+	    return ResponseJSON::Redirect($args, 303);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -79,9 +79,9 @@ class Responses
 	//=========================================================================
 	public static function Found(Array $args=[])
 	{
-        $args['status'] = 'found';
-        return ResponseJSON::Redirect($args, 302);
-    }
+	    $args['status'] = 'found';
+	    return ResponseJSON::Redirect($args, 302);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -90,22 +90,22 @@ class Responses
 	//=========================================================================
 	public static function MovedPermanently(Array $args=[])
 	{
-        $args['status'] = 'moved_permanently';
-        return ResponseJSON::Redirect($args, 301);
-    }
+	    $args['status'] = 'moved_permanently';
+	    return ResponseJSON::Redirect($args, 301);
+	}
 
-    //=========================================================================
-    //=========================================================================
-    // 400 - Bad Request Response
-    //=========================================================================
-    //=========================================================================
-    public static function BadRequest(Array $args=[])
-    {
-        if (!isset($args['status'])) {
-            $args['status'] = 'bad_request';
-        }
-        return ResponseJSON::RequestError($args);
-    }
+	//=========================================================================
+	//=========================================================================
+	// 400 - Bad Request Response
+	//=========================================================================
+	//=========================================================================
+	public static function BadRequest(Array $args=[])
+	{
+	    if (!isset($args['status'])) {
+                $args['status'] = 'bad_request';
+            }
+	    return ResponseJSON::RequestError($args);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -114,9 +114,9 @@ class Responses
 	//=========================================================================
 	public static function MissingParameters(Array $args=[])
 	{
-        $args['status'] = 'missing_parameters';
-        return ResponseJSON::RequestError($args);
-    }
+	    $args['status'] = 'missing_parameters';
+	    return ResponseJSON::RequestError($args);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -125,9 +125,9 @@ class Responses
 	//=========================================================================
 	public static function FailedValidation(Array $args=[])
 	{
-        $args['status'] = 'failed_validation';
-        return ResponseJSON::RequestError($args);
-    }
+	    $args['status'] = 'failed_validation';
+	    return ResponseJSON::RequestError($args);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -136,9 +136,9 @@ class Responses
 	//=========================================================================
 	public static function FailedAuthentication(Array $args=[])
 	{
-    	$args['status'] = 'failed_authentication';
-        return ResponseJSON::AccessError($args);
-    }
+	    $args['status'] = 'failed_authentication';
+	    return ResponseJSON::AccessError($args);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -147,9 +147,9 @@ class Responses
 	//=========================================================================
 	public static function NotAuthenticated(Array $args=[])
 	{
-        $args['status'] = 'not_authenticated';
-        return ResponseJSON::AccessError($args);
-    }
+	    $args['status'] = 'not_authenticated';
+            return ResponseJSON::AccessError($args);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -158,9 +158,9 @@ class Responses
 	//=========================================================================
 	public static function Forbidden(Array $args=[])
 	{
-        $args['status'] = 'forbidden';
-        return ResponseJSON::AccessError($args, 403);
-    }
+	    $args['status'] = 'forbidden';
+            return ResponseJSON::AccessError($args, 403);
+	}
 
 	//=========================================================================
 	//=========================================================================
@@ -169,9 +169,9 @@ class Responses
 	//=========================================================================
 	public static function NotFound(Array $args=[])
 	{
-        $args['status'] = 'not_found';
-        return ResponseJSON::AccessError($args, 404);
-    }
+            $args['status'] = 'not_found';
+            return ResponseJSON::AccessError($args, 404);
+        }
 
 	//=========================================================================
 	//=========================================================================
@@ -180,9 +180,9 @@ class Responses
 	//=========================================================================
 	public static function DataNotFound(Array $args=[])
 	{
-        $args['status'] = 'data_not_found';
-        return ResponseJSON::NotFoundError($args, 404);
-    }
+            $args['status'] = 'data_not_found';
+            return ResponseJSON::NotFoundError($args, 404);
+        }
 
 	//=========================================================================
 	//=========================================================================
@@ -191,8 +191,8 @@ class Responses
 	//=========================================================================
 	public static function InternalError(Array $args=[])
 	{
-        return ResponseJSON::InternalError($args);
-    }
+            return ResponseJSON::InternalError($args);
+        }
 
 	//=========================================================================
 	//=========================================================================
@@ -201,8 +201,8 @@ class Responses
 	//=========================================================================
 	public static function InvalidMethodParamentersError(Array $args=[])
 	{
-    	$args['status'] = 'invalid_method_parameters';
-        return ResponseJSON::InternalError($args);
-    }
+	    $args['status'] = 'invalid_method_parameters';
+	    return ResponseJSON::InternalError($args);
+        }
 
 }
