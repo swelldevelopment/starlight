@@ -52,7 +52,7 @@ class Router
 		$config = false;
 		$config_loc_var = ($config_loc == 'session') ? ($_SESSION) : ($GLOBALS);
 		if (isset($config_loc_var[$config_index])) {
-			$config =& $config_loc_var[$config_index];
+			$config = $config_loc_var[$config_index];
 		}
 		if (is_object($config)) {
 			if (isset($config->jwt_api_token)) {
