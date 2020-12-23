@@ -34,6 +34,8 @@ class Router
 	{
     	$class_alias = true;
 		define('DOC_ROOT', $base_dir);
+		$config_index = 'config';
+		$config_loc = 'session';
 		extract($args);
         $request = Request\Request::instance();
 
@@ -47,11 +49,29 @@ class Router
 		//*********************************************************
 		// API JWT Key / API URL Base
 		//*********************************************************
-		if (array_key_exists('jwt_api_token', $_SESSION['config'])) {
-			define('API_JWT_KEY', $_SESSION['config']['jwt_api_token']);
+		$config = false;
+		$config_loc_var = ($config_loc == 'session') ? ($_SESSION) : ($GLOBALS);
+		if (isset($config_loc_var[$config_index])) {
+			$config =& $config_loc_var[$config_index];
+		}
+		if (is_object($config)) {
+			if (isset($config->jwt_api_token)) {
+				define('API_JWT_KEY', $config->jwt_api_token);
+			}
+			else {
+				self::ErrorAndDie(3);
+			}
+		}
+		else if (is_array($config)) {
+			if (array_key_exists('jwt_api_token', $config)) {
+				define('API_JWT_KEY', $config['jwt_api_token']);
+			}
+			else {
+				self::ErrorAndDie(3);
+			}
 		}
 		else {
-			self::ErrorAndDie(3);
+			self::ErrorAndDie(7);
 		}
 
 		//*********************************************************
@@ -304,6 +324,16 @@ class Router
                     'status_code' => $sub_error
                 ]);
                 break;
+
+			//-------------------------------------------------------------
+			// Configuration Not Found
+			//-------------------------------------------------------------
+			case 7:
+				Response\ResponseJSON::RequestError([
+					'message' => 'Configuration Not Found.',
+					'status_code' => $sub_error
+				]);
+				break;
 
     	}
 
