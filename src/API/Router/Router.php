@@ -35,7 +35,7 @@ class Router
     	$class_alias = true;
 		define('DOC_ROOT', $base_dir);
 		$config_index = 'config';
-		$config_loc = 'session';
+		$config_loc = 'globals';
 		extract($args);
         $request = Request\Request::instance();
 
