@@ -181,48 +181,48 @@ There are two types of filters available, `before` and `after`.  `before` filter
 
 #### Defining A Route Filter
 
-	\Route::filter('christmas', function()
-	{
-		if(date('m/d') != '12/25')
-		{
-			return 'Today is NOT Christmas.';
-		}
-	});
+    \Route::filter('christmas', function()
+    {
+        if(date('m/d') != '12/25')
+        {
+            return 'Today is NOT Christmas.';
+        }
+    });
 
 The first parameter of the `\Route::filter` method is the custom name of the filter which you can use to attach it to routes.  If the filter returns a response, that response is considered the response to the request and the route will not execute. Any `after` filters on the route are also cancelled.
 
 #### Attaching A Filter To A Route
 
-	\Route::get('/party', ['before' => 'christmas', function()
-	{
-		return 'Today is Christmas. Party on!';
-	}]);
+    \Route::get('/party', ['before' => 'christmas', function()
+    {
+        return 'Today is Christmas. Party on!';
+    }]);
 
 #### Attaching Multiple Filters To A Route
 
-	\Route::get('/party', ['before' => ['auth', 'christmas'], function()
-	{
-		return 'You are authenticated and today is Christmas!';
-	}]);
+    \Route::get('/party', ['before' => ['auth', 'christmas'], function()
+    {
+        return 'You are authenticated and today is Christmas!';
+    }]);
 
 #### Specifying Route Parameters in the Filter
 
-	\Route::filter('admin', function($match_info, $id)
-	{
-	    if($id != 1) return 'Access restricted, you must be the admin.';
-	});
+    \Route::filter('admin', function($match_info, $id)
+    {
+        if($id != 1) return 'Access restricted, you must be the admin.';
+    });
 
-	\Route::get('/user/[i:id]', ['before' => 'admin', function()
-	{
-		return 'Hello World';
-	}]);
+    \Route::get('/user/[i:id]', ['before' => 'admin', function()
+    {
+        return 'Hello World';
+    }]);
 
 `after` filters receive a `$response` as the 2nd argument passed to the filter:
 
-	\Route::filter('log', function($match_info, $response)
-	{
-		//
-	});
+    \Route::filter('log', function($match_info, $response)
+    {
+        //
+    });
 
 
 ## Route Groups

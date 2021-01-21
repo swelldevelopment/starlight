@@ -4,11 +4,11 @@
 /**
  * Route Controller Class
  *
- * @package		Starlight\API
- * @subpackage	Router
- * @author 		Matt Palermo, Christian J. Clark
- * @copyright	Copyright (c) Swell Development LLC
- * @link		http://www.swelldevelopment.com/
+ * @package         Starlight\API
+ * @subpackage      Router
+ * @author          Matt Palermo, Christian J. Clark
+ * @copyright       Copyright (c) Swell Development LLC
+ * @link            http://www.swelldevelopment.com/
  **/
 //*****************************************************************************
 //*****************************************************************************
@@ -28,24 +28,24 @@ class RouteController
     //------------------------------------------------------------
     protected $filterBefore = ['auth'];
 
-	//=========================================================================
-	//=========================================================================
+    //=========================================================================
+    //=========================================================================
     /**
      * Call any before filters if set
      *
      * @return mixed
      */
-	//=========================================================================
-	//=========================================================================
+    //=========================================================================
+    //=========================================================================
     public function filter_before()
     {
         if (!is_array($this->filterBefore)) {
             $this->filterBefore = [$this->filterBefore];
         }
 
-		//------------------------------------------------------------
+        //------------------------------------------------------------
         // Run each filter
-		//------------------------------------------------------------
+        //------------------------------------------------------------
         foreach ($this->filterBefore as $filter) {
             if (!method_exists($this, 'filter_' . $filter)) {
                 continue;
@@ -145,7 +145,7 @@ class RouteController
     //=========================================================================
     protected function auth_success()
     {
-	    // Override this method to handle auth success
+        // Override this method to handle auth success
     }
 
 }

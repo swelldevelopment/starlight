@@ -1,23 +1,23 @@
 {
-	"name": "swelldevelopment/starlight",
-	"version": "1.0.1",
-	"require": {
-		"php": ">=7.0.0",
-		"firebase/php-jwt": ">= 4.0"
-	},
-	"require-dev": {},
-	"repositories": [],
-	"autoload": {
-		"psr-4": {
-			"Starlight\\": "src"
-		}
-	},
-	"scripts-dev": {
-		"post-install-cmd": [
-			"vendor/bin/security-checker security:check"
-		],
-		"post-update-cmd": [
-			"vendor/bin/security-checker security:check"
-		]
-	}
+    "name": "swelldevelopment/starlight",
+    "version": "1.0.2",
+    "require": {
+        "php": ">=7.0.0",
+        "firebase/php-jwt": ">= 4.0"
+    },
+    "require-dev": {},
+    "repositories": [],
+    "autoload": {
+        "psr-4": {
+            "Starlight\\": "src"
+        }
+    },
+    "scripts-dev": {
+        "post-install-cmd": [
+            "vendor/bin/security-checker security:check"
+        ],
+        "post-update-cmd": [
+            "vendor/bin/security-checker security:check"
+        ]
+    }
 }

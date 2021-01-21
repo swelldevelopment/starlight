@@ -4,11 +4,11 @@
 /**
  * HTTP Router Class
  *
- * @package		Starlight\Http
- * @subpackage	Router
- * @author 		Matt Palermo, Christian J. Clark
- * @copyright	Copyright (c) Swell Development LLC
- * @link		http://www.swelldevelopment.com/
+ * @package         Starlight\Http
+ * @subpackage      Router
+ * @author          Matt Palermo, Christian J. Clark
+ * @copyright       Copyright (c) Swell Development LLC
+ * @link            http://www.swelldevelopment.com/
  **/
 //*****************************************************************************
 //*****************************************************************************
@@ -380,7 +380,6 @@ class Router
         return "`^{$route}$`u";
     }
 
-
     //=========================================================================
     //=========================================================================
     // Run the route matching
@@ -402,7 +401,7 @@ class Router
         }
 
         //------------------------------------------------------------
-        // If the target is a controller / method string 
+        // If the target is a controller / method string
         // (Controller@method), extract to controller / target values
         //------------------------------------------------------------
         if (isset($match['target']) && !($match['target'] instanceof \Closure) && strpos($match['target'], '@') !== false) {
@@ -431,7 +430,7 @@ class Router
         else  {
 
             //------------------------------------------------------------
-            // A controller has been supplied, use that and 
+            // A controller has been supplied, use that and
             // the target will be the method
             //------------------------------------------------------------
             if ($match['controller']) {
