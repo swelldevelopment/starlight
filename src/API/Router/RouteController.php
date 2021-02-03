@@ -69,7 +69,7 @@ class RouteController
         //------------------------------------------------------------
         // Check for the authorization header
         //------------------------------------------------------------
-        $headers = \phpOpenFW\Helpers\HTTP::GetAllHeaders();
+        $headers = getallheaders(); // \phpOpenFW\Helpers\HTTP::GetAllHeaders();
 
         //------------------------------------------------------------
         // Check for Authorization Header
