@@ -259,15 +259,26 @@ class Router
     protected static function CORS(Array $args=[])
     {
         //----------------------------------------------------------------------
-        // Allow API calls (CORS)
+        // HTTP Origin
         //----------------------------------------------------------------------
-        if (isset($_SERVER['HTTP_ORIGIN'])) {
+        $http_origin = false;
+        if (isset($args['http_origin'])) {
+            $http_origin = $args['http_origin'];
+        }
+        else if (isset($_SERVER['HTTP_ORIGIN'])) {
+            $http_origin = $_SERVER['HTTP_ORIGIN'];
+        }
+
+        //----------------------------------------------------------------------
+        // Origin based access (Secure)
+        //----------------------------------------------------------------------
+        if ($http_origin) {
 
             //==================================================================
             // Decide if the origin in $_SERVER['HTTP_ORIGIN'] 
             // is one you want to allow, and if so:
             //==================================================================
-            header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+            header("Access-Control-Allow-Origin: {$http_origin}");
             header('Access-Control-Allow-Credentials: true');
             header('Access-Control-Max-Age: 1000');
             header('Access-Control-Expose-Headers: x-jwt');
@@ -288,6 +299,9 @@ class Router
                 exit(0);
             }
         }
+        //----------------------------------------------------------------------
+        // Wildcard access (INSECURE!!!)
+        //----------------------------------------------------------------------
         else {
             header('Access-Control-Allow-Origin: *');
             header('Access-Control-Expose-Headers: x-jwt');
