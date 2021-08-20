@@ -102,8 +102,8 @@ class Responses
     public static function BadRequest(Array $args=[])
     {
         if (!isset($args['status'])) {
-                $args['status'] = 'bad_request';
-            }
+            $args['status'] = 'bad_request';
+        }
         return ResponseJSON::RequestError($args);
     }
 
@@ -148,7 +148,7 @@ class Responses
     public static function NotAuthenticated(Array $args=[])
     {
         $args['status'] = 'not_authenticated';
-            return ResponseJSON::AccessError($args);
+        return ResponseJSON::AccessError($args);
     }
 
     //=========================================================================
@@ -158,8 +158,10 @@ class Responses
     //=========================================================================
     public static function Forbidden(Array $args=[])
     {
-        $args['status'] = 'forbidden';
-            return ResponseJSON::AccessError($args, 403);
+        if (!isset($args['status'])) {
+            $args['status'] = 'forbidden';
+        }
+        return ResponseJSON::AccessError($args, 403);
     }
 
     //=========================================================================
@@ -169,9 +171,9 @@ class Responses
     //=========================================================================
     public static function NotFound(Array $args=[])
     {
-            $args['status'] = 'not_found';
-            return ResponseJSON::AccessError($args, 404);
-        }
+        $args['status'] = 'not_found';
+        return ResponseJSON::AccessError($args, 404);
+    }
 
     //=========================================================================
     //=========================================================================
@@ -180,9 +182,9 @@ class Responses
     //=========================================================================
     public static function DataNotFound(Array $args=[])
     {
-            $args['status'] = 'data_not_found';
-            return ResponseJSON::NotFoundError($args, 404);
-        }
+        $args['status'] = 'data_not_found';
+        return ResponseJSON::NotFoundError($args, 404);
+    }
 
     //=========================================================================
     //=========================================================================
@@ -191,8 +193,8 @@ class Responses
     //=========================================================================
     public static function InternalError(Array $args=[])
     {
-            return ResponseJSON::InternalError($args);
-        }
+        return ResponseJSON::InternalError($args);
+    }
 
     //=========================================================================
     //=========================================================================
@@ -203,6 +205,6 @@ class Responses
     {
         $args['status'] = 'invalid_method_parameters';
         return ResponseJSON::InternalError($args);
-        }
+    }
 
 }
