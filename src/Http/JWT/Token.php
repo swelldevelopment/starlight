@@ -78,7 +78,8 @@ class Token
         if ($keyAppend) {
             $key .= $keyAppend;
         }
-        return JWT::encode($token, $key);
+        $algo = 'HS256';
+        return JWT::encode($token, $key, $algo);
     }
 
     //=========================================================================
