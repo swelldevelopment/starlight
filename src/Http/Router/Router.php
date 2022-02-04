@@ -99,6 +99,9 @@ class Router
             throw new \Exception('Routes must be an array');
         }
         foreach ($routes as $route) {
+            if (PHP_VERSION >= 8 && is_array($route)) {
+                $route = array_values($route);
+            }
             call_user_func_array(array($this, 'map'), $route);
         }
     }
@@ -422,6 +425,9 @@ class Router
         // Route match found with a Closure, just run it
         //------------------------------------------------------------
         if (isset($match['target']) && is_object($match['target']) && ($match['target'] instanceof \Closure)) {
+            if (PHP_VERSION >= 8 && is_array($match['params'])) {
+                $match['params'] = array_values($match['params']);
+            }
             $response = call_user_func_array($match['target'], $match['params']);
         }
         //------------------------------------------------------------
@@ -446,6 +452,9 @@ class Router
             //------------------------------------------------------------
             if (!method_exists($obj, $method)) {
                 throw new \Exception('Invalid route method ' . get_class($obj) . '@' . $method);
+            }
+            if (PHP_VERSION >= 8 && is_array($match['params'])) {
+                $match['params'] = array_values($match['params']);
             }
             $response = call_user_func_array([$obj, $method], $match['params']);
         }
