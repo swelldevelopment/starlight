@@ -515,6 +515,9 @@ class Router
     //=========================================================================
     protected function _callFilter($name, $args)
     {
+        if (PHP_VERSION >= 8) {
+            $args = array_values($args);
+        }
         $val = call_user_func_array($name, $args);
 
         //------------------------------------------------------------
