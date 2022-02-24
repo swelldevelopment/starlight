@@ -67,6 +67,11 @@ class RouteController
     protected function filter_auth()
     {
         //------------------------------------------------------------
+        // Start Payload (Failed authentication only)
+        //------------------------------------------------------------
+        $payload = [];
+
+        //------------------------------------------------------------
         // Check for the authorization header
         //------------------------------------------------------------
         $headers = getallheaders(); // \phpOpenFW\Helpers\HTTP::GetAllHeaders();
@@ -76,34 +81,40 @@ class RouteController
         //------------------------------------------------------------
         if (isset($headers['Authorization'])) {
             $jwt = str_replace('Bearer ', '', $headers['Authorization']);
+            $auth_type = 'header';
+        }
+        //------------------------------------------------------------
+        // Check for the jwt in a cookie
+        //------------------------------------------------------------
+        else if (isset($_COOKIE['jwt'])) {
+            $jwt = $_COOKIE['jwt'];
+            $auth_type = 'cookie';
+        }
+
+        //------------------------------------------------------------
+        // Do we have a token?
+        //------------------------------------------------------------
+        if (!empty($jwt)) {
             try {
                 $this->authToken = Token::key(API_JWT_KEY)->decode($jwt);
                 $this->auth_success();
                 return;
             }
             catch (\Exception $e) {
-                $this->auth_exception('header', $e);
-            }
-        }
-
-        //------------------------------------------------------------
-        // Check for the jwt in a cookie
-        //------------------------------------------------------------
-        else if (isset($_COOKIE['jwt'])) {
-            try {
-                $this->authToken = Token::key(API_JWT_KEY)->decode($_COOKIE['jwt']);
-                $this->auth_success();
-                return;
-            }
-            catch (\Exception $e) {
-                $this->auth_exception('cookie', $e);
+                $this->auth_exception($auth_type, $e);
+                if (STARLIGHT_ERROR_MODE > 2) {
+                    $file = $e->getFile();
+                    $line = $e->getLine();
+                    $msg = $e->getMessage();
+                    $payload['message'] = $file . ' @ Line ' . $line . ': ' . $msg;
+                }
             }
         }
 
         //------------------------------------------------------------
         // Return Response
         //------------------------------------------------------------
-        return $this->not_authenticated();
+        return $this->not_authenticated($payload);
     }
 
     //=========================================================================
@@ -113,14 +124,14 @@ class RouteController
      */
     //=========================================================================
     //=========================================================================
-    protected function not_authenticated($exit=true)
+    protected function not_authenticated($payload, $exit=true)
     {
         if ($exit) {
-            print \Responses::NotAuthenticated();
+            print \Responses::NotAuthenticated($payload);
             exit;
         }
         else {
-            return \Responses::NotAuthenticated();
+            return \Responses::NotAuthenticated($payload);
         }
     }
 

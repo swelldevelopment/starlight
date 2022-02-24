@@ -1,6 +1,6 @@
 {
     "name": "swelldevelopment/starlight",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "require": {
         "php": ">=7.0.0",
         "firebase/php-jwt": "^5.5.0"
