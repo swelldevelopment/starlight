@@ -272,7 +272,7 @@ class Responses
         if (!isset($args['status'])) {
             $args['status'] = 'locked';
         }
-        return ResponseJSON::NotFoundError($args, 423);
+        return ResponseJSON::RequestError($args, 423);
     }
 
     //=========================================================================
@@ -285,7 +285,7 @@ class Responses
         if (!isset($args['status'])) {
             $args['status'] = 'failed_dependency';
         }
-        return ResponseJSON::NotFoundError($args, 424);
+        return ResponseJSON::RequestError($args, 424);
     }
 
     //=========================================================================
