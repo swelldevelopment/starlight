@@ -204,6 +204,7 @@ class Router
             // Mode 3: Debug
             //------------------------------------------------------------------
             else if ($internal_error_mode == 3) {
+                trigger_error($e->getMessage());
                 if (isset($e->xdebug_message)) {
                     print $e->xdebug_message;
                 }
