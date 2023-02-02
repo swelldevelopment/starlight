@@ -187,31 +187,17 @@ class Router
         try {
             print \Route::dispatch();
         }
+        //----------------------------------------------------------------------
+        // Handled Exceptions
+        //----------------------------------------------------------------------
         catch (\Exception $e) {
-            //------------------------------------------------------------------
-            // Mode 1: Return 500 with generic error message (default)
-            //------------------------------------------------------------------
-            if ($internal_error_mode == 1) {
-                static::ErrorAndDie(100, 'An internal error occurred.');
-            }
-            //------------------------------------------------------------------
-            // Mode 2: Return 500 with specific error message
-            //------------------------------------------------------------------
-            else if ($internal_error_mode == 2) {
-                static::ErrorAndDie(100, $e->getMessage(), $e);
-            }
-            //------------------------------------------------------------------
-            // Mode 3: Debug
-            //------------------------------------------------------------------
-            else if ($internal_error_mode == 3) {
-                trigger_error($e->getMessage());
-                if (isset($e->xdebug_message)) {
-                    print $e->xdebug_message;
-                }
-                else {
-                    print_r($e->getTrace());
-                }
-            }
+            static::HandleDispatchException('Unhandled Exception', $e);
+        }
+        //----------------------------------------------------------------------
+        // Handle Type Errors
+        //----------------------------------------------------------------------
+        catch (\TypeError $e) {
+            static::HandleDispatchException('Type Error', $e);
         }
     }
 
@@ -317,6 +303,46 @@ class Router
     // Internal Methods
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    //==========================================================================
+    //==========================================================================
+    // Handle Dispatch Exception
+    //==========================================================================
+    //==========================================================================
+    protected static function HandleDispatchException($error_type, $e)
+    {
+        //----------------------------------------------------------------------
+        // Mode 1: Return 500 with generic error message (default)
+        //----------------------------------------------------------------------
+        if (STARLIGHT_ERROR_MODE == 1) {
+            static::ErrorAndDie(100, 'An internal error occurred.');
+        }
+        //----------------------------------------------------------------------
+        // Mode 2: Return 500 with specific error message
+        //----------------------------------------------------------------------
+        else if (STARLIGHT_ERROR_MODE == 2) {
+            static::ErrorAndDie(100, $error_type . ': ' . $e->getMessage(), $e);
+        }
+        //----------------------------------------------------------------------
+        // Mode 3: Debug
+        //----------------------------------------------------------------------
+        else if (STARLIGHT_ERROR_MODE == 3) {
+            $error_msg = $error_type . ': ' . $e->getMessage();
+            $error_msg .= ' @ ' . $e->getFile() . ':' . $e->getLine();
+            if (ini_get('display_errors')) {
+                trigger_error($error_msg);
+            }
+            else {
+                print $error_msg . "\n\n";
+            }
+            if (isset($e->xdebug_message)) {
+                print $e->xdebug_message;
+            }
+            else {
+                print_r($e->getTrace());
+            }
+        }
+    }
 
     //==========================================================================
     //==========================================================================
