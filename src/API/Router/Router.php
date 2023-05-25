@@ -40,15 +40,22 @@ class Router
         // Defaults / Extract Args
         //----------------------------------------------------------------------
         $internal_error_mode = 2;
+        $error_handler = false;
         $class_alias = true;
         $config_index = 'config';
         $config_loc = 'globals';
         extract($args);
 
         //----------------------------------------------------------------------
-        // Set Error Mode
+        // Set Error Mode / Error Handler
         //----------------------------------------------------------------------
         define('STARLIGHT_ERROR_MODE', $internal_error_mode);
+        if ($error_handler && is_callable($error_handler)) {
+            define('STARLIGHT_ERROR_HANDLER', $error_handler);
+        }
+        else {
+            define('STARLIGHT_ERROR_HANDLER', false);
+        }
 
         //----------------------------------------------------------------------
         // Set Request, Check that it is valid
@@ -311,6 +318,19 @@ class Router
     //==========================================================================
     protected static function HandleDispatchException($error_type, $e)
     {
+        //----------------------------------------------------------------------
+        // Is the error handler set?
+        //----------------------------------------------------------------------
+        if (STARLIGHT_ERROR_HANDLER && STARLIGHT_ERROR_MODE < 3) {
+            call_user_func(STARLIGHT_ERROR_HANDLER,
+                $e->getCode(),
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine(),
+                ['type' => $error_type]
+            );
+        }
+
         //----------------------------------------------------------------------
         // Mode 1: Return 500 with generic error message (default)
         //----------------------------------------------------------------------
