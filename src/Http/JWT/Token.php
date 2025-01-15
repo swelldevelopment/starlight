@@ -15,6 +15,7 @@
 
 namespace Starlight\Http\JWT;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class Token
 {
@@ -97,6 +98,8 @@ class Token
         if ($keyAppend) {
             $key .= $keyAppend;
         }
-        return JWT::decode($jwt, $key, ['HS256']);
+        $algo = 'HS256';
+        $headers = new \stdClass();
+        return JWT::decode($jwt, new Key($key, $algo), $headers);
     }
 }
