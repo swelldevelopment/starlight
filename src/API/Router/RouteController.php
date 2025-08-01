@@ -37,7 +37,7 @@ class RouteController
      */
     //=========================================================================
     //=========================================================================
-    public function filter_before()
+    public function filter_before(Array $args)
     {
         if (!is_array($this->filterBefore)) {
             $this->filterBefore = [$this->filterBefore];
@@ -50,7 +50,7 @@ class RouteController
             if (!method_exists($this, 'filter_' . $filter)) {
                 continue;
             }
-            $v = call_user_func_array([$this, 'filter_' . $filter], func_get_args());
+            $v = call_user_func_array([$this, 'filter_' . $filter], [$args]);
             if ($v) {
                 return $v;
             }
