@@ -53,7 +53,7 @@ class Request
             //---------------------------------------------------------
             // Allow ONLY JSON for from input
             //---------------------------------------------------------
-            if (static::$content_type != 'application/json') {
+            if (stripos(static::$content_type, 'application/json') === false) {
                 static::$is_valid = false;
             }
             $obj = json_decode($input, true);
